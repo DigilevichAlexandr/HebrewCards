@@ -1,0 +1,229 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 50%, #1a1a2e 100%);
+  color: #e0e0e0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 32px 16px;
+  width: 100%;
+  max-width: 480px;
+}
+
+header {
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.counter {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  color: #8899aa;
+}
+
+/* --- Card --- */
+
+.card-container {
+  perspective: 800px;
+  width: 320px;
+  height: 220px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  gap: 12px;
+}
+
+.card-front {
+  background: linear-gradient(145deg, #16213e, #1a1a2e);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.card-back {
+  background: linear-gradient(145deg, #1e3a5f, #162447);
+  border: 1px solid rgba(100, 180, 255, 0.15);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: rotateY(180deg);
+}
+
+.hebrew {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  direction: rtl;
+  line-height: 1.4;
+}
+
+.russian {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #c8ddf0;
+  text-align: center;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: #556677;
+  position: absolute;
+  bottom: 16px;
+}
+
+/* --- Buttons --- */
+
+.controls {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-learned {
+  background: #1b5e20;
+  color: #a5d6a7;
+}
+
+.btn-learned:hover {
+  background: #2e7d32;
+}
+
+.btn-next {
+  background: #1565c0;
+  color: #90caf9;
+}
+
+.btn-next:hover {
+  background: #1976d2;
+}
+
+.btn-reset,
+.btn-reset-bottom {
+  background: transparent;
+  color: #556677;
+  font-size: 0.85rem;
+  padding: 8px 16px;
+}
+
+.btn-reset-bottom:hover,
+.btn-reset:hover {
+  color: #8899aa;
+}
+
+/* --- Done message --- */
+
+.done-message {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.done-message h2 {
+  font-size: 1.4rem;
+  color: #a5d6a7;
+}
+
+.done-message .btn-reset {
+  background: #1565c0;
+  color: #90caf9;
+  font-size: 1rem;
+  padding: 12px 24px;
+}
+
+/* --- Card enter animation --- */
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-container.animate-in {
+  animation: cardIn 0.35s ease-out;
+}
+
+/* --- Responsive --- */
+
+@media (max-width: 400px) {
+  .card-container {
+    width: 280px;
+    height: 190px;
+  }
+
+  .hebrew {
+    font-size: 2.4rem;
+  }
+
+  .russian {
+    font-size: 1.3rem;
+  }
+
+  header h1 {
+    font-size: 1.4rem;
+  }
+}

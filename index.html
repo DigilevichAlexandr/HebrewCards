@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hebrew Cards — Учим иврит</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>🇮🇱 Hebrew Cards</h1>
+      <p class="counter" id="counter"></p>
+    </header>
+
+    <div class="card-container" id="cardContainer">
+      <div class="card" id="card">
+        <div class="card-face card-front">
+          <span class="hebrew" id="hebrewWord"></span>
+          <span class="hint">нажми, чтобы перевернуть</span>
+        </div>
+        <div class="card-face card-back">
+          <span class="russian" id="russianWord"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="done-message" id="doneMessage">
+      <h2>Все слова выучены! 🎉</h2>
+      <button class="btn btn-reset" id="resetAllBtn">Начать заново</button>
+    </div>
+
+    <div class="controls" id="controls">
+      <button class="btn btn-learned" id="learnedBtn">✓ Выучено</button>
+      <button class="btn btn-next" id="nextBtn">Следующее →</button>
+    </div>
+
+    <button class="btn btn-reset-bottom" id="resetBtn">Сбросить прогресс</button>
+  </div>
+
+  <script src="words.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
