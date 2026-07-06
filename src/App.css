@@ -342,7 +342,19 @@ body {
 .list-count {
   color: var(--text-muted);
   font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+.btn-clear-learned {
+  width: 100%;
   margin-bottom: 16px;
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.35);
+  background: rgba(52, 211, 153, 0.08);
+}
+
+.btn-clear-learned:hover {
+  background: rgba(52, 211, 153, 0.15);
 }
 
 .card-list ul {

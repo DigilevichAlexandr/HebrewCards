@@ -64,12 +64,8 @@ export default function App() {
               learnedIds={learnedIds}
               onDelete={deleteCard}
               onToggleLearned={toggleLearned}
+              onClearLearned={clearLearned}
             />
-            {learnedIds.size > 0 && (
-              <button type="button" className="btn btn-ghost reset-btn" onClick={clearLearned}>
-                Вернуть все выученные в изучение
-              </button>
-            )}
             <button type="button" className="btn btn-ghost reset-btn" onClick={resetToDefault}>
               Сбросить к исходному списку
             </button>

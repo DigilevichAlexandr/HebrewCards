@@ -5,9 +5,10 @@ interface Props {
   learnedIds: Set<number>;
   onDelete: (id: number) => void;
   onToggleLearned: (id: number) => void;
+  onClearLearned: () => void;
 }
 
-export function CardList({ cards, learnedIds, onDelete, onToggleLearned }: Props) {
+export function CardList({ cards, learnedIds, onDelete, onToggleLearned, onClearLearned }: Props) {
   if (cards.length === 0) {
     return <div className="empty-state">Список пуст</div>;
   }
@@ -19,6 +20,11 @@ export function CardList({ cards, learnedIds, onDelete, onToggleLearned }: Props
       <p className="list-count">
         Всего: {cards.length} · выучено: {learnedCount}
       </p>
+      {learnedCount > 0 && (
+        <button type="button" className="btn btn-clear-learned" onClick={onClearLearned}>
+          Отметить все как невыученные
+        </button>
+      )}
       <ul>
         {cards.map((card) => {
           const learned = learnedIds.has(card.id);
