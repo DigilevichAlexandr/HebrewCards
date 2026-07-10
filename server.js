@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { fetchGoogleTts } from './lib/tts.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -14,22 +15,8 @@ app.get('/api/tts', async (req, res) => {
   }
 
   try {
-    const url =
-      `https://translate.google.com/translate_tts?ie=UTF-8&tl=he&client=tw-ob&q=${encodeURIComponent(text)}`;
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        Referer: 'https://translate.google.com/',
-      },
-    });
-
-    if (!response.ok) {
-      res.status(502).json({ error: 'tts upstream failed' });
-      return;
-    }
-
-    const audio = Buffer.from(await response.arrayBuffer());
-    if (audio.length === 0) {
+    const audio = await fetchGoogleTts(text);
+    if (!audio) {
       res.status(502).json({ error: 'empty audio' });
       return;
     }

@@ -71,7 +71,7 @@ export function StudyMode({ cards, learnedCount, onMarkLearned }: Props) {
     e.stopPropagation();
     setSpeakError('');
     const ok = await speakHebrew(current.hebrew);
-    if (!ok) setSpeakError('Не удалось воспроизвести. Проверьте интернет.');
+    if (!ok) setSpeakError('Не удалось воспроизвести слово');
   };
 
   return (

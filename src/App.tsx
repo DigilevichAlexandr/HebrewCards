@@ -1,15 +1,40 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCards } from './hooks/useCards';
 import { StudyMode } from './components/StudyMode';
 import { AddCardForm } from './components/AddCardForm';
 import { CardList } from './components/CardList';
+import { XpBar } from './components/XpBar';
+import { LevelUpToast } from './components/LevelUpToast';
+import { getLevelIndex } from './utils/xp';
+import type { Level } from './data/levels';
+import { LEVELS } from './data/levels';
 import './App.css';
 
 type Tab = 'study' | 'add' | 'list';
 
 export default function App() {
-  const { cards, studyCards, learnedIds, addCard, deleteCard, toggleLearned, clearLearned, resetToDefault } = useCards();
+  const { cards, studyCards, learnedIds, awardedIds, xp, addCard, deleteCard, toggleLearned, markAsLearned, clearLearned, resetToDefault } = useCards();
   const [tab, setTab] = useState<Tab>('study');
+  const [levelUp, setLevelUp] = useState<Level | null>(null);
+  const [xpFlash, setXpFlash] = useState<number | null>(null);
+  const prevLevelRef = useRef(getLevelIndex(xp));
+
+  useEffect(() => {
+    const newLevel = getLevelIndex(xp);
+    if (newLevel > prevLevelRef.current) {
+      setLevelUp(LEVELS[newLevel]);
+    }
+    prevLevelRef.current = newLevel;
+  }, [xp]);
+
+  const handleMarkLearned = (id: number) => {
+    const willGain = !awardedIds.has(id);
+    markAsLearned(id);
+    if (willGain) {
+      setXpFlash(10);
+      setTimeout(() => setXpFlash(null), 1500);
+    }
+  };
 
   return (
     <div className="app">
@@ -22,7 +47,11 @@ export default function App() {
           <h1>Hebrew Cards</h1>
         </div>
         <p className="subtitle">Изучение слов на иврите по карточкам</p>
+        <XpBar xp={xp} />
       </header>
+
+      <LevelUpToast level={levelUp} onClose={() => setLevelUp(null)} />
+      {xpFlash && <div className="xp-flash">+{xpFlash} XP</div>}
 
       <nav className="tabs">
         <button
@@ -53,7 +82,7 @@ export default function App() {
           <StudyMode
             cards={studyCards}
             learnedCount={learnedIds.size}
-            onMarkLearned={toggleLearned}
+            onMarkLearned={handleMarkLearned}
           />
         )}
         {tab === 'add' && <AddCardForm onAdd={addCard} />}
